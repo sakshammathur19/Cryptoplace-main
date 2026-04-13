@@ -1,43 +1,56 @@
 import { createContext, useEffect, useState } from "react";
 
-// ✅ Create Context
+// Context
+// eslint-disable-next-line react-refresh/only-export-components
 export const CoinContext = createContext();
 
-const CoinProvider = (props) => {
+const CoinProvider = ({ children }) => {
   const [allCoin, setAllCoin] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [currency, setCurrency] = useState({
     name: "usd",
     symbol: "$",
   });
 
-  // ✅ Fetch all coins with market data
+  // FETCH COINS
   const fetchAllCoin = async () => {
-    const url = `/api/api/v3/coins/markets?vs_currency=${currency.name}&order=market_cap_desc&per_page=50&page=1&sparkline=false`;
+    setLoading(true);
 
     try {
+      const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency.name}&order=market_cap_desc&per_page=50&page=1&sparkline=false`;
+
       const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("API response failed");
+      }
+
       const data = await response.json();
+
       setAllCoin(data);
     } catch (error) {
       console.error("Error fetching market data:", error);
+      setAllCoin([]); // fallback empty state
+    } finally {
+      setLoading(false);
     }
   };
 
-  // ✅ Fetch data on mount and when currency changes
+  // RUN ON LOAD + CURRENCY CHANGE
   useEffect(() => {
     fetchAllCoin();
   }, [currency]);
 
-  // ✅ Context value to share globally
-  const contextValue = {
-    allCoin,
-    currency,
-    setCurrency,
-  };
-
   return (
-    <CoinContext.Provider value={contextValue}>
-      {props.children}
+    <CoinContext.Provider
+      value={{
+        allCoin,
+        currency,
+        setCurrency,
+        loading,
+      }}
+    >
+      {children}
     </CoinContext.Provider>
   );
 };
