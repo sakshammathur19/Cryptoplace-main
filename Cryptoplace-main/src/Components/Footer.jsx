@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 const Footer = () => {
   return (
@@ -9,11 +10,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-14">
           {/* LOGO + DESC */}
           <div className="space-y-4">
-            <img
-              src="/src/assets/logo.png"
-              alt="Logo"
-              className="w-32 object-contain"
-            />
+            <img src={logo} alt="Logo" className="w-32 object-contain" />
 
             <p className="text-gray-400 text-sm leading-relaxed">
               Track crypto prices, analyze trends, and stay updated with
