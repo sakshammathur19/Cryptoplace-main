@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { CoinContext } from "../Context/CoinContext";
 import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 const Navbar = () => {
   const { setCurrency } = useContext(CoinContext);
@@ -20,7 +21,7 @@ const Navbar = () => {
         {/* LOGO */}
         <Link to="/" className="flex items-center">
           <img
-            src="/src/assets/logo.png"
+            src={logo}
             alt="Logo"
             className="w-[130px] md:w-[150px] object-contain"
           />
