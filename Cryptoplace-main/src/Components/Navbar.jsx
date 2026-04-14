@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { CoinContext } from "../Context/CoinContext";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
-
+import arrow from "../assets/arrow_icon.png";
 const Navbar = () => {
   const { setCurrency } = useContext(CoinContext);
 
@@ -75,11 +75,7 @@ const Navbar = () => {
               hover:scale-105 hover:shadow-xl transition"
             >
               Sign Up
-              <img
-                src="/src/assets/arrow_icon.png"
-                alt="arrow"
-                className="w-4 h-4"
-              />
+              <img src={arrow} alt="arrow" className="w-4 h-4" />
             </button>
           </Link>
         </div>
